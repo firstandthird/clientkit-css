@@ -1,0 +1,6 @@
+body {
+  background-color: var(--color-background-default);
+}
+
+@mixin bg-colors;
+@mixin text-colors;

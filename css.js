@@ -17,6 +17,7 @@ const pathExists = require('path-exists');
 const mdcss = require('mdcss');
 const mdcssTheme = require('mdcss-theme-clientkit');
 const async = require('async');
+
 const addVarObject = (curVarName, curVarValue, curObject) => {
   if (typeof curVarValue === 'object') {
     // for each key in the object, set object recursively:
@@ -98,7 +99,7 @@ class CSSTask extends ClientKitTask {
     });
     // load mixins:
     const globalMixins = require('require-all')({
-      dirname: path.join(__dirname, '..', 'styles', 'mixins'),
+      dirname: path.join(__dirname, 'styles', 'mixins'),
       resolve: m => m(config, postcss)
     });
     if (pathExists.sync(path.join(config.assetPath, 'mixins'))) {
@@ -115,12 +116,12 @@ class CSSTask extends ClientKitTask {
     const processes = [
       cssimport({
         path: [
-          path.resolve(__dirname, '../styles')
+          path.resolve(__dirname, 'styles')
         ]
       }),
       cssmixins({
         mixins: this.mixins,
-        mixinsFiles: path.resolve(__dirname, '../styles/mixins/*.css')
+        mixinsFiles: path.resolve(__dirname, 'styles/mixins/*.css')
       }),
       inlinesvg(),
       svgo(),

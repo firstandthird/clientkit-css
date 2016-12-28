@@ -1,0 +1,12 @@
+/*---
+section: Typography
+title: Links
+
+```example:html
+<a href="#">Link</a>
+```
+ */
+
+a {
+  @mixin link var(--color-link), var(--color-link-hover);
+}

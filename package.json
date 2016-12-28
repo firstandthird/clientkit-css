@@ -19,6 +19,7 @@
     "eslint-plugin-import": "^2.1.0"
   },
   "dependencies": {
+    "require-all": "2.0.0",
     "css-mqpacker": "5.0.1",
     "cssnano": "3.7.6",
     "mdcss": "1.5.2",
