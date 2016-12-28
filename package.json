@@ -1,0 +1,39 @@
+{
+  "name": "clientkit-css",
+  "version": "1.0.0",
+  "description": "Clientkit task that executes a PostCSS process on your .css files",
+  "main": "css.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstandthird/clientkit-css.git"
+  },
+  "author": "First+Third",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/firstandthird/clientkit-css/issues"
+  },
+  "homepage": "https://github.com/firstandthird/clientkit-css#readme",
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-firstandthird": "^3.0.2",
+    "eslint-plugin-import": "^2.1.0"
+  },
+  "dependencies": {
+    "css-mqpacker": "5.0.1",
+    "cssnano": "3.7.6",
+    "mdcss": "1.5.2",
+    "mdcss-theme-clientkit": "4.0.0",
+    "postcss": "5.2.4",
+    "postcss-cssnext": "2.8.0",
+    "postcss-font-magician": "1.4.0",
+    "postcss-import": "8.1.2",
+    "postcss-inline-svg": "2.1.2",
+    "postcss-mixins": "5.2.0",
+    "postcss-svgo": "2.1.5",
+    "postcss-triangle": "1.0.1",
+    "clientkit-task": "0.0.7"
+  },
+  "eslintConfig": {
+    "extends": "firstandthird"
+  }
+}
