@@ -35,6 +35,7 @@ class CSSTask extends ClientKitTask {
     super(name, config, runner, log);
     this.setup();
   }
+
   get description() {
     return 'compiles and minify source-mapped stylesheets for your project, and generates a handy design guide to help visualize it';
   }
@@ -49,59 +50,75 @@ class CSSTask extends ClientKitTask {
     this.cssVars = {};
     this.customMedia = {};
     // load css variables:
-    Object.keys(config.color).forEach(color => {
-      this.cssVars[`color-${color}`] = config.color[color];
-    });
-    Object.keys(config.spacing.default).forEach(spacing => {
-      this.cssVars[`spacing-${spacing}`] = config.spacing.default[spacing];
-    });
-    Object.keys(config.grid).forEach(prop => {
-      this.cssVars[`grid-${prop}`] = config.grid[prop];
-    });
-    Object.keys(config.easing).forEach(prop => {
-      this.cssVars[`easing-${prop}`] = config.easing[prop];
-    });
+    if (config.color) {
+      Object.keys(config.color).forEach(color => {
+        this.cssVars[`color-${color}`] = config.color[color];
+      });
+    }
+    if (typeof config.spacing === 'object' && config.spacing.default) {
+      Object.keys(config.spacing.default).forEach(spacing => {
+        this.cssVars[`spacing-${spacing}`] = config.spacing.default[spacing];
+      });
+    }
+    if (config.grid) {
+      Object.keys(config.grid).forEach(prop => {
+        this.cssVars[`grid-${prop}`] = config.grid[prop];
+      });
+    }
+    if (config.easing) {
+      Object.keys(config.easing).forEach(prop => {
+        this.cssVars[`easing-${prop}`] = config.easing[prop];
+      });
+    }
     if (config.vars) {
       Object.keys(config.vars).forEach(varName => {
         addVarObject(varName, config.vars[varName], this.cssVars);
       });
     }
     // load spacing variables:
-    Object.keys(config.breakpoints).forEach((breakpoint, i, bps) => {
-      const breakpointObj = {
-        min: config.breakpoints[breakpoint]['min-width'],
-        max: config.breakpoints[breakpoint]['max-width'],
-      };
-      const constraint = config.mobileFirst ? 'min' : 'max';
-      const width = breakpointObj[constraint];
-      const mediaquery = `(${constraint}-width: ${width})`;
-      let mediaqueryOnly;
+    if (config.breakpoints) {
+      Object.keys(config.breakpoints).forEach((breakpoint, i, bps) => {
+        const breakpointObj = {
+          min: config.breakpoints[breakpoint]['min-width'],
+          max: config.breakpoints[breakpoint]['max-width'],
+        };
+        const constraint = config.mobileFirst ? 'min' : 'max';
+        const width = breakpointObj[constraint];
+        const mediaquery = `(${constraint}-width: ${width})`;
+        let mediaqueryOnly;
 
-      if (i === 0) {
-        mediaqueryOnly = `(min-width: ${breakpointObj.min})`;
-      } else {
-        mediaqueryOnly = `(max-width: ${breakpointObj.max}) and (min-width: ${breakpointObj.min})`;
-      }
+        if (i === 0) {
+          mediaqueryOnly = `(min-width: ${breakpointObj.min})`;
+        } else {
+          mediaqueryOnly = `(max-width: ${breakpointObj.max}) and (min-width: ${breakpointObj.min})`;
+        }
 
-      // Last one should be mobile, so no down
-      if (i !== bps.length < 1) {
-        this.customMedia[`${breakpoint}-down`] = `(max-width: ${breakpointObj.max})`;
-      }
+        // Last one should be mobile, so no down
+        if (i !== bps.length < 1) {
+          this.customMedia[`${breakpoint}-down`] = `(max-width: ${breakpointObj.max})`;
+        }
 
-      // First one should be wide desktop so no up
-      if (i !== 0) {
-        this.customMedia[`${breakpoint}-up`] = `(min-width: ${breakpointObj.min})`;
-      }
+        // First one should be wide desktop so no up
+        if (i !== 0) {
+          this.customMedia[`${breakpoint}-up`] = `(min-width: ${breakpointObj.min})`;
+        }
 
-      this.cssVars[`breakpoint-${breakpoint}`] = width;
-      this.customMedia[breakpoint] = mediaquery;
-      this.customMedia[`${breakpoint}-only`] = mediaqueryOnly;
-    });
+        this.cssVars[`breakpoint-${breakpoint}`] = width;
+        this.customMedia[breakpoint] = mediaquery;
+        this.customMedia[`${breakpoint}-only`] = mediaqueryOnly;
+      });
+    }
+
     // load mixins:
-    const globalMixins = require('require-all')({
-      dirname: path.join(__dirname, 'styles', 'mixins'),
-      resolve: m => m(config, postcss)
-    });
+    let globalMixins;
+    try {
+      globalMixins = require('require-all')({
+        dirname: path.join(config.globalMixins),
+        resolve: m => m(config, postcss)
+      });
+    } catch (e) {
+      this.log(e);
+    }
     if (pathExists.sync(path.join(config.assetPath, 'mixins'))) {
       const localMixins = require('require-all')({
         dirname: path.join(config.assetPath, 'mixins'),
@@ -172,7 +189,7 @@ class CSSTask extends ClientKitTask {
           variables: this.cssVars,
           css: [
             'style.css',
-            '../clientkit.css'
+            path.join(this.options, 'clientkit.css')
           ],
           examples: {
             css: this.options.docs.css
@@ -190,37 +207,37 @@ class CSSTask extends ClientKitTask {
     if (this.options.minify) {
       processes.push(cssnano());
     }
-    async.auto({
+    async.autoInject({
       contents: (done) => {
         fs.readFile(input, done);
       },
-      postcss: ['contents', (results, done) => {
-        postcss(processes).process(results.contents, { from: input, to: outputFilename, map: { inline: false } })
+      postcss: (contents, done) => {
+        postcss(processes).process(contents, { from: input, to: outputFilename, map: { inline: false } })
         .then(result => {
           done(null, result);
         });
-      }],
-      messages: ['postcss', (results, done) => {
-        if (results.postcss.messages) {
-          results.postcss.messages.forEach(message => {
+      },
+      messages: (postcss, done) => {
+        if (postcss.messages) {
+          postcss.messages.forEach(message => {
             if (message.text) {
               this.log([message.type], `${message.text} [${message.plugin}]`);
             }
           });
         }
         done();
-      }],
-      sourcemaps: ['postcss', (results, done) => {
+      },
+      sourcemaps: (postcss, done) => {
         // write the source map if indicated:
-        if (results.postcss.map && this.options.sourcemap !== false) {
-          this.write(`${outputFilename}.map`, JSON.stringify(results.postcss.map), done);
+        if (postcss.map && this.options.sourcemap !== false) {
+          this.write(`${outputFilename}.map`, JSON.stringify(postcss.map), done);
         } else {
           return done();
         }
-      }],
-      write: ['sourcemaps', (results, done) => {
-        this.write(outputFilename, results.postcss.css, done);
-      }]
+      },
+      write: (sourcemaps, postcss, done) => {
+        this.write(outputFilename, postcss.css, done);
+      }
     }, callback);
   }
 }
