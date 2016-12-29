@@ -180,7 +180,7 @@ class CSSTask extends ClientKitTask {
       }));
     }
 
-    if (this.options.docs.enabled && input.match(this.options.docs.input)) {
+    if (this.options.docs && this.options.docs.enabled && input.match(this.options.docs.input)) {
       processes.push(mdcss({
         theme: mdcssTheme({
           title: this.options.docs.title,
