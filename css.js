@@ -132,13 +132,11 @@ class CSSTask extends ClientKitTask {
   process(input, outputFilename, callback) {
     const processes = [
       cssimport({
-        path: [
-          path.resolve(__dirname, 'styles')
-        ]
+        path: this.options.importPaths
       }),
       cssmixins({
         mixins: this.mixins,
-        mixinsFiles: path.resolve(__dirname, 'styles/mixins/*.css')
+        mixinsFiles: this.options.mixinPath
       }),
       inlinesvg(),
       svgo(),
