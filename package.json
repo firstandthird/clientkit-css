@@ -19,12 +19,12 @@
     "eslint-plugin-import": "^2.1.0"
   },
   "dependencies": {
-    "require-all": "2.0.0",
-    "normalize.css": "5.0.0",
     "css-mqpacker": "5.0.1",
     "cssnano": "3.7.6",
     "mdcss": "1.5.2",
     "mdcss-theme-clientkit": "4.0.0",
+    "normalize.css": "5.0.0",
+    "path-exists": "^3.0.0",
     "postcss": "5.2.4",
     "postcss-cssnext": "2.8.0",
     "postcss-font-magician": "1.4.0",
@@ -33,6 +33,7 @@
     "postcss-mixins": "5.2.0",
     "postcss-svgo": "2.1.5",
     "postcss-triangle": "1.0.1",
+    "require-all": "2.0.0",
     "runkit-task": "0.0.10"
   },
   "eslintConfig": {
