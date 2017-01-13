@@ -1,6 +1,6 @@
 'use strict';
 
-const ClientKitTask = require('clientkit-task');
+const RunKitTask = require('runkit-task');
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
@@ -29,10 +29,8 @@ const addVarObject = (curVarName, curVarValue, curObject) => {
   curObject[curVarName] = curVarValue;
 };
 
-class CSSTask extends ClientKitTask {
-  // loads config files:
-  constructor(name, config, runner, log) {
-    super(name, config, runner, log);
+class CSSTask extends RunKitTask {
+  init() {
     this.setup();
   }
 

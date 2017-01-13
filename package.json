@@ -33,7 +33,7 @@
     "postcss-mixins": "5.2.0",
     "postcss-svgo": "2.1.5",
     "postcss-triangle": "1.0.1",
-    "clientkit-task": "0.0.7"
+    "runkit-task": "0.0.10"
   },
   "eslintConfig": {
     "extends": "firstandthird"
