@@ -201,7 +201,7 @@ class CSSTask extends RunKitTask {
 
     // minify if specified in config files:
     if (this.options.minify) {
-      processes.push(cssnano());
+      processes.push(cssnano({ zindex: false }));
     }
     async.autoInject({
       contents: (done) => {
