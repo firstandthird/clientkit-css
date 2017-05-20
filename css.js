@@ -38,6 +38,11 @@ class CSSTask extends RunKitTask {
     return 'compiles and minify source-mapped stylesheets for your project, and generates a handy design guide to help visualize it';
   }
 
+  // returns the module to load when running in a separate process:
+  get classModule() {
+    return path.join(__dirname, 'css.js');
+  }
+
   updateOptions(newOptions) {
     super.updateOptions(newOptions);
     this.setup();
