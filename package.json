@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/firstandthird/clientkit-css.git"
   },
+  "scripts": {
+    "test": "tap test"
+  },
   "author": "First+Third",
   "license": "UNLICENSED",
   "bugs": {
