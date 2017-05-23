@@ -1,6 +1,6 @@
 'use strict';
 
-const RunKitTask = require('taskkit-task');
+const TaskKitTask = require('taskkit-task');
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
@@ -29,7 +29,7 @@ const addVarObject = (curVarName, curVarValue, curObject) => {
   curObject[curVarName] = curVarValue;
 };
 
-class CSSTask extends RunKitTask {
+class CSSTask extends TaskKitTask {
   init() {
     this.setup();
   }
