@@ -1,6 +1,6 @@
 'use strict';
 
-const RunKitTask = require('runkit-task');
+const RunKitTask = require('taskkit-task');
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
