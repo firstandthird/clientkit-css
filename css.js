@@ -43,12 +43,6 @@ class CSSTask extends TaskKitTask {
     return path.join(__dirname, 'css.js');
   }
 
-  get defaultOptions() {
-    return {
-      multithread: true,
-    };
-  }
-
   updateOptions(newOptions) {
     super.updateOptions(newOptions);
     this.setup();
