@@ -1,6 +1,6 @@
 'use strict';
 
-const RunKitTask = require('runkit-task');
+const TaskKitTask = require('taskkit-task');
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
@@ -29,13 +29,18 @@ const addVarObject = (curVarName, curVarValue, curObject) => {
   curObject[curVarName] = curVarValue;
 };
 
-class CSSTask extends RunKitTask {
+class CSSTask extends TaskKitTask {
   init() {
     this.setup();
   }
 
   get description() {
     return 'compiles and minify source-mapped stylesheets for your project, and generates a handy design guide to help visualize it';
+  }
+
+  // returns the module to load when running in a separate process:
+  get classModule() {
+    return path.join(__dirname, 'css.js');
   }
 
   updateOptions(newOptions) {
