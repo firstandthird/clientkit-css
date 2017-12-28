@@ -31,7 +31,7 @@ tap.test('nested variables', (t) => {
 });
 
 tap.test('variables in css', (t) => {
-  const css = new ClientKitCss('css', {
+  const css = new ClientKitCss('vars', {
     files: {
       'test/out/variables.css': 'test/fixtures/variables.css'
     },
