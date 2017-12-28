@@ -1,0 +1,9 @@
+body {
+    line-height: var(--line-height);   
+}
+h1 {
+    font-family: var(--font-primary);
+}
+h2 {
+    font-family: var(--font-secondary);
+}
