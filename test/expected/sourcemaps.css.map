@@ -1,0 +1,1 @@
+{"version":3,"sources":["../fixtures/sourcemaps.css"],"names":[],"mappings":"AAAA;EACE,gBAAgB;CACjB","file":"sourcemaps.css","sourcesContent":["body {\n  font-size: 12px;\n}"]}
