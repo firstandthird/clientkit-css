@@ -1,8 +1,8 @@
-.button.myBtn #ddd {
-    color: #eee;
-    background: red
+.link {
+  color: red;
+  background: black;
 }
-.button.myBtn #ddd:hover {
-    color: grey
+.link:hover {
+  color: white;
 }
 /*# sourceMappingURL=mixins.css.map */

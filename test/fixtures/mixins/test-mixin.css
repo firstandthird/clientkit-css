@@ -1,0 +1,8 @@
+@define-mixin test $color, $hoverColor {
+  color: $color;
+  @mixin-content;
+
+  &:hover {
+    color: $hoverColor;
+  }
+}
