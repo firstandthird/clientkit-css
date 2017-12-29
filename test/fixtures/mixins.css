@@ -1,0 +1,13 @@
+@define-mixin button $name, $color: white, $hoverColor: grey {
+    .button.$(name) {
+        color: $color;
+        @mixin-content;
+    }
+    .button.$(name):hover {
+        color: $hoverColor;
+    }
+}
+
+@mixin button myBtn #ddd, #eee {
+    background: red;
+}

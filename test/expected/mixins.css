@@ -1,0 +1,8 @@
+.button.myBtn #ddd {
+    color: #eee;
+    background: red
+}
+.button.myBtn #ddd:hover {
+    color: grey
+}
+/*# sourceMappingURL=mixins.css.map */

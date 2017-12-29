@@ -1,0 +1,16 @@
+const tap = require('tap');
+const ClientKitCss = require('../');
+const utils = require('./utils');
+
+tap.test('generates mixins', (t) => {
+  const css = new ClientKitCss('mixins', {
+    files: {
+      'test/out/mixins.css': 'test/fixtures/mixins.css'
+    }
+  });
+  css.execute((err, results) => {
+    t.equal(err, null);
+    utils.checkOutput(t, 'mixins.css');
+    t.end();
+  });
+});
