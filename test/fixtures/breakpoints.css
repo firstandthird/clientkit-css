@@ -1,0 +1,50 @@
+body {
+  @media (--desktop-wide-down) {
+    background: white;
+  }
+  @media (--desktop-wide) {
+    background: red;
+  }
+  @media (--desktop-wide-only) {
+    background: green;
+  }
+
+  @media (--desktop-down) {
+    background: red;
+  }
+  @media (--desktop-up) {
+    background: white;
+  }
+  @media (--desktop) {
+    background: white;
+  }
+  @media (--desktop-only) {
+    background: purple;
+  }
+
+  @media (--tablet-down) {
+    background: brown;
+  }
+  @media (--tablet-up) {
+    background: blue;
+  }
+  @media (--tablet) {
+    background: pink;
+  }
+  @media (--tablet-only) {
+    background: orange;
+  }
+
+  @media (--mobile-down) {
+    background: cyan;
+  }
+  @media (--mobile-up) {
+    background: gray;
+  }
+  @media (--mobile) {
+    background: aqua;
+  }
+  @media (--mobile-only) {
+    background: white;
+  }
+}
