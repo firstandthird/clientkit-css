@@ -4,7 +4,7 @@ const utils = require('./utils');
 
 tap.test('generates local mixins', (t) => {
   const css = new ClientKitCss('local mixins', {
-    mixinPath: 'test/fixtures/mixins/*.css',
+    mixinPath: 'test/fixtures/mixins/*',
     files: {
       'test/out/mixins.css': 'test/fixtures/mixins.css'
     }
