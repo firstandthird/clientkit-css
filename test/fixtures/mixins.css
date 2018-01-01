@@ -1,0 +1,5 @@
+.link {
+  @mixin test red, white;
+  background: black;
+  @mixin test-mixin red;
+}

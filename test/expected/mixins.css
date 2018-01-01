@@ -1,0 +1,8 @@
+.link {
+  color: red;
+  background: black;
+}
+.link:hover {
+  color: white;
+}
+/*# sourceMappingURL=mixins.css.map */

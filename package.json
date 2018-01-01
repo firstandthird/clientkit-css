@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "Clientkit task that executes a PostCSS process on your .css files",
   "main": "css.js",
+  "scripts": {
+    "test": "tap --cov test/*.test.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/firstandthird/clientkit-css.git"
@@ -14,9 +17,10 @@
   },
   "homepage": "https://github.com/firstandthird/clientkit-css#readme",
   "devDependencies": {
-    "eslint": "^3.9.1",
-    "eslint-config-firstandthird": "^3.0.2",
-    "eslint-plugin-import": "^2.1.0"
+    "eslint": "^4.14.0",
+    "eslint-config-firstandthird": "^4.3.0",
+    "eslint-plugin-import": "^2.8.0",
+    "tap": "^11.0.1"
   },
   "dependencies": {
     "async": "^2.1.4",

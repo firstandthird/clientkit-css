@@ -1,0 +1,19 @@
+.foo {
+  width: 240px;
+}
+
+.bar {
+  width: 160px;
+}
+
+@media screen and (max-width: 1339px) {
+
+  .foo {
+    width: 576px;
+  }
+
+  .bar {
+    width: 384px;
+  }
+}
+/*# sourceMappingURL=mqpacker.css.map */

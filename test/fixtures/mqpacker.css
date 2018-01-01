@@ -1,0 +1,19 @@
+.foo {
+  width: 240px;
+}
+
+@media screen and (--desktop) {
+  .foo {
+    width: 576px;
+  }
+}
+
+.bar {
+  width: 160px;
+}
+
+@media screen and (--desktop) {
+  .bar {
+    width: 384px;
+  }
+}

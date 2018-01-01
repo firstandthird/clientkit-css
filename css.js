@@ -114,15 +114,17 @@ class CSSTask extends TaskKitTask {
 
     // load mixins:
     let globalMixins;
-    try {
-      globalMixins = require('require-all')({
-        dirname: path.join(config.globalMixins),
-        resolve: m => m(config, postcss)
-      });
-    } catch (e) {
-      this.log(e);
+    if (config.globalMixins) {
+      try {
+        globalMixins = require('require-all')({
+          dirname: path.join(config.globalMixins),
+          resolve: m => m(config, postcss)
+        });
+      } catch (e) {
+        this.log(e);
+      }
     }
-    if (pathExists.sync(path.join(config.assetPath, 'mixins'))) {
+    if (config.assetPath && pathExists.sync(path.join(config.assetPath, 'mixins'))) {
       const localMixins = require('require-all')({
         dirname: path.join(config.assetPath, 'mixins'),
         resolve: m => m(config, postcss)
