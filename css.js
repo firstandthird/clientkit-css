@@ -113,7 +113,7 @@ class CSSTask extends TaskKitTask {
     }
 
     // load mixins:
-    let globalMixins;
+    let globalMixins = {};
     if (config.globalMixins) {
       try {
         globalMixins = require('require-all')({

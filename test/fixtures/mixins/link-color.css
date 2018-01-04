@@ -1,4 +1,4 @@
-@define-mixin test $color, $hoverColor {
+@define-mixin link-color $color, $hoverColor {
   color: $color;
   @mixin-content;
 

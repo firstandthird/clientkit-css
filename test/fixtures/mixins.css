@@ -1,5 +1,7 @@
 .link {
-  @mixin test red, white;
-  background: black;
-  @mixin test-mixin red;
+  @mixin link-color red, blue;
+}
+
+.bg {
+  @mixin bg-color red;
 }
