@@ -1,0 +1,12 @@
+.one {
+  transition: all 600ms easeInSine;
+}
+
+.two {
+  transition: all 600ms easeInOutQuint;
+}
+
+.three {
+  transition: all 600ms easeInOutExpo;
+}
+

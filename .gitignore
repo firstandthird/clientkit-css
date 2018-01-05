@@ -1,3 +1,5 @@
 node_modules
 .nyc_output/
 test/out
+.idea/
+.DS_Store

@@ -2,7 +2,16 @@
   color: red;
   background: black;
 }
-.link:hover {
-  color: white;
+  .link:hover {
+    color: white;
+  }
+
+.test {
+  background-color: red;
+}
+
+.foo {
+  height: 12px;
+  width: 12px;
 }
 /*# sourceMappingURL=mixins.css.map */

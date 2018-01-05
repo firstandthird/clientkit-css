@@ -7,11 +7,9 @@
 }
 
 @media screen and (max-width: 1339px) {
-
   .foo {
     width: 576px;
   }
-
   .bar {
     width: 384px;
   }

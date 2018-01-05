@@ -1,0 +1,5 @@
+body {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-lg) var(--spacing-xl);
+    margin: var(--spacing-xs);
+    width: var(--spacing-none);
+}

@@ -1,0 +1,12 @@
+body .nested {
+    content: 'No & needed';
+  }
+
+.nested .foo {
+    content: 'Works with & too';
+  }
+
+.parent-selector .nested {
+    content: 'Parent selector works too'
+  }
+/*# sourceMappingURL=nesting.css.map */

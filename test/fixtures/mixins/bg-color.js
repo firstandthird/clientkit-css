@@ -1,11 +1,9 @@
 'use strict';
 
-module.exports = function () {
+module.exports = function (config, postcss) {
   return function (mixin, bg) {
-    const styles = {
+    return {
       'background-color': bg
     };
-
-    return styles;
   };
 };

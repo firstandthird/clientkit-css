@@ -4,9 +4,11 @@ const TaskKitTask = require('taskkit-task');
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
+const csseasings = require('postcss-easings');
 const cssimport = require('postcss-import');
 const cssnext = require('postcss-cssnext');
 const cssmixins = require('postcss-mixins');
+const cssnested = require('postcss-nested');
 const mqpacker = require('css-mqpacker');
 const cssfonts = require('postcss-font-magician');
 const inlinesvg = require('postcss-inline-svg');
@@ -14,8 +16,6 @@ const triangle = require('postcss-triangle');
 const svgo = require('postcss-svgo');
 const cssnano = require('cssnano');
 const pathExists = require('path-exists');
-const mdcss = require('mdcss');
-const mdcssTheme = require('mdcss-theme-clientkit');
 const async = require('async');
 
 const addVarObject = (curVarName, curVarValue, curObject) => {
@@ -35,16 +35,20 @@ class CSSTask extends TaskKitTask {
   }
 
   get description() {
+    // istanbul ignore next
     return 'compiles and minify source-mapped stylesheets for your project, and generates a handy design guide to help visualize it';
   }
 
   // returns the module to load when running in a separate process:
   get classModule() {
+    // istanbul ignore next
     return path.join(__dirname, 'css.js');
   }
 
-  updateOptions(newOptions) {
+  updateOptions (newOptions) {
+    /* istanbul ignore next */
     super.updateOptions(newOptions);
+    /* istanbul ignore next */
     this.setup();
   }
 
@@ -68,11 +72,6 @@ class CSSTask extends TaskKitTask {
         this.cssVars[`grid-${prop}`] = config.grid[prop];
       });
     }
-    if (config.easing) {
-      Object.keys(config.easing).forEach(prop => {
-        this.cssVars[`easing-${prop}`] = config.easing[prop];
-      });
-    }
     if (config.vars) {
       Object.keys(config.vars).forEach(varName => {
         addVarObject(varName, config.vars[varName], this.cssVars);
@@ -85,9 +84,8 @@ class CSSTask extends TaskKitTask {
           min: config.breakpoints[breakpoint]['min-width'],
           max: config.breakpoints[breakpoint]['max-width'],
         };
-        const constraint = config.mobileFirst ? 'min' : 'max';
-        const width = breakpointObj[constraint];
-        const mediaquery = `(${constraint}-width: ${width})`;
+        const width = config.breakpoints[breakpoint]['max-width'];
+        const mediaquery = `(max-width: ${width})`;
         let mediaqueryOnly;
 
         if (i === 0) {
@@ -113,7 +111,7 @@ class CSSTask extends TaskKitTask {
     }
 
     // load mixins:
-    let globalMixins;
+    let globalMixins = {};
     if (config.globalMixins) {
       try {
         globalMixins = require('require-all')({
@@ -121,6 +119,7 @@ class CSSTask extends TaskKitTask {
           resolve: m => m(config, postcss)
         });
       } catch (e) {
+        // istanbul ignore next
         this.log(e);
       }
     }
@@ -131,6 +130,7 @@ class CSSTask extends TaskKitTask {
       });
       Object.assign(globalMixins, localMixins);
     }
+
     this.mixins = globalMixins;
   }
 
@@ -143,9 +143,11 @@ class CSSTask extends TaskKitTask {
         mixins: this.mixins,
         mixinsFiles: this.options.mixinPath
       }),
+      csseasings(),
       inlinesvg(),
       svgo(),
       triangle(),
+      cssnested(),
       cssnext({
         warnForDuplicates: false,
         features: {
@@ -155,7 +157,8 @@ class CSSTask extends TaskKitTask {
           customMedia: {
             extensions: this.customMedia
           },
-          autoprefixer: this.options.autoprefixer
+          autoprefixer: this.options.autoprefixer,
+          nesting: false
         }
       }),
       mqpacker({
@@ -166,13 +169,7 @@ class CSSTask extends TaskKitTask {
           const av = aVal ? ~~aVal[2] : 0;
           const bv = bVal ? ~~bVal[2] : 0;
 
-          let ret = bv - av;
-
-          if (this.options.mobileFirst) {
-            ret *= -1;
-          }
-
-          return ret;
+          return bv - av;
         }
       })
     ];
@@ -180,29 +177,6 @@ class CSSTask extends TaskKitTask {
     if (input.match(this.options.fontParsingWhitelist)) {
       processes.push(cssfonts({
         foundries: ['custom', 'hosted', 'google']
-      }));
-    }
-
-    if (this.options.docs && this.options.docs.enabled && input.match(this.options.docs.input)) {
-      processes.push(mdcss({
-        theme: mdcssTheme({
-          title: this.options.docs.title,
-          logo: '',
-          colors: this.options.color,
-          variables: this.cssVars,
-          css: [
-            'style.css',
-            path.join(this.options, 'clientkit.css')
-          ],
-          examples: {
-            css: this.options.docs.css
-          },
-          info: {
-            clientkitVersion: this.options.clientkitVersion
-          },
-          sectionOrder: this.options.docs.sectionOrder
-        }),
-        destination: path.join(this.options.dist.replace(process.cwd(), ''), 'styleguide')
       }));
     }
 
@@ -214,15 +188,23 @@ class CSSTask extends TaskKitTask {
       contents: (done) => {
         fs.readFile(input, done);
       },
-      postcss: (contents, done) => {
-        postcss(processes).process(contents, { from: input, to: outputFilename, map: { inline: false } })
-        .then(result => {
-          done(null, result);
-        });
+      pcss: (contents, done) => {
+        let map = {
+          inline: false
+        };
+
+        if (this.options.sourcemap === false) {
+          map = false;
+        }
+
+        postcss(processes)
+          .process(contents, { from: input, to: outputFilename, map })
+          .then(result => { done(null, result); });
       },
-      messages: (postcss, done) => {
-        if (postcss.messages) {
-          postcss.messages.forEach(message => {
+      messages: (pcss, done) => {
+        // istanbul ignore next
+        if (pcss.messages) {
+          pcss.messages.forEach(message => {
             if (message.text) {
               this.log([message.type], `${message.text} [${message.plugin}]`);
             }
@@ -230,16 +212,16 @@ class CSSTask extends TaskKitTask {
         }
         done();
       },
-      sourcemaps: (postcss, done) => {
+      sourcemaps: (pcss, done) => {
         // write the source map if indicated:
-        if (postcss.map && this.options.sourcemap !== false) {
-          this.write(`${outputFilename}.map`, JSON.stringify(postcss.map), done);
+        if (pcss.map && this.options.sourcemap !== false) {
+          this.write(`${outputFilename}.map`, JSON.stringify(pcss.map), done);
         } else {
           return done();
         }
       },
-      write: (sourcemaps, postcss, done) => {
-        this.write(outputFilename, postcss.css, done);
+      write: (sourcemaps, pcss, done) => {
+        this.write(outputFilename, pcss.css, done);
       }
     }, callback);
   }

@@ -1,5 +1,13 @@
 .link {
-  @mixin test red, white;
-  background: black;
-  @mixin test-mixin red;
+  @mixin test red, white {
+    background: black;
+  }
+}
+
+.test {
+  @mixin bg-color red;
+}
+
+.foo {
+  @mixin size 12px;
 }

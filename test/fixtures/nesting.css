@@ -1,0 +1,15 @@
+body {
+  .nested {
+    content: 'No & needed';
+  }
+}
+
+.nested {
+  & .foo {
+    content: 'Works with & too';
+  }
+
+  .parent-selector & {
+    content: 'Parent selector works too'
+  }
+}
