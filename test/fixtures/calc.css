@@ -1,0 +1,35 @@
+.test {
+  width: calc(3vh * 2 - 1vh);
+}
+
+.test2 {
+  width: calc(2 * 50%);
+}
+
+.test3 {
+  /* Mixed units doesn't calculate */
+  width: calc(100% + 3em);
+}
+
+.test4 {
+  width: calc(calc(calc(1vh * 0.75) * 1.5) - 1vh);
+}
+
+.test5 {
+  width: calc(100px / 2);
+}
+
+.test6 {
+  width: calc(var(--spacing-xs) * 3);
+}
+
+.test7 {
+  width: calc(var(--spacing-sm) + var(--spacing-md));
+}
+
+.test8 {
+  /* Won't work, need unit */
+  width: calc(var(--spacing-xs) + 3);
+  /* Will work */
+  height: calc(var(--spacing-xs) + 3px);
+}

@@ -1,0 +1,37 @@
+.test {
+  width: 5vh;
+}
+
+.test2 {
+  width: 100%;
+}
+
+.test3 {
+  /* Mixed units doesn't calculate */
+  width: calc(100% + 3em);
+}
+
+.test4 {
+  width: 0.125vh;
+}
+
+.test5 {
+  width: 50px;
+}
+
+.test6 {
+  width: 30px;
+}
+
+.test7 {
+  width: 45px;
+}
+
+.test8 {
+  /* Won't work, need unit */
+  width: calc(10px + 3);
+  /* Will work */
+  height: 13px;
+}
+
+/*# sourceMappingURL=calc.css.map */
