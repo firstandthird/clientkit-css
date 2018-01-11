@@ -182,7 +182,12 @@ class CSSTask extends TaskKitTask {
 
     // minify if specified in config files:
     if (this.options.minify) {
-      processes.push(cssnano({ zindex: false }));
+      const options = this.options.minifyOptions || {
+        zindex: false,
+        reduceIdents: false
+      };
+
+      processes.push(cssnano(options));
     }
     async.autoInject({
       contents: (done) => {

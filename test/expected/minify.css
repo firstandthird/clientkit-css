@@ -1,2 +1,2 @@
-body{background:red}
+@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.box{-webkit-animation-name:fadeOut;animation-name:fadeOut}body{background:red}
 /*# sourceMappingURL=minify.css.map */
