@@ -152,7 +152,8 @@ class CSSTask extends TaskKitTask {
         warnForDuplicates: false,
         features: {
           customProperties: {
-            variables: this.cssVars
+            variables: this.cssVars,
+            strict: false
           },
           customMedia: {
             extensions: this.customMedia

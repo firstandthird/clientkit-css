@@ -37,6 +37,7 @@ tap.test('variables in css', (t) => {
     },
     vars: {
       'line-height': 1,
+      'h2-line-height': 1.2,
       font: {
         primary: 'Arial',
         secondary: 'Helvetica'

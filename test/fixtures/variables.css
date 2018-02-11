@@ -3,7 +3,9 @@ body {
 }
 h1 {
     font-family: var(--font-primary);
+    line-height: var(--h1-line-height, var(--line-height));
 }
 h2 {
     font-family: var(--font-secondary);
+    line-height: var(--h2-line-height, var(--line-height));
 }
