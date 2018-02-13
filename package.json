@@ -4,7 +4,7 @@
   "description": "Clientkit task that executes a PostCSS process on your .css files",
   "main": "css.js",
   "scripts": {
-    "test": "tap --cov test/*.test.js"
+    "test": "tap -J -Rmin --cov test/*.test.js"
   },
   "repository": {
     "type": "git",

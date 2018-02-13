@@ -3,8 +3,10 @@ body {
 }
 h1 {
     font-family: Arial;
+    line-height: 1;
 }
 h2 {
     font-family: Helvetica;
+    line-height: 1.2;
 }
 /*# sourceMappingURL=variables.css.map */
