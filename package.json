@@ -1,6 +1,6 @@
 {
   "name": "clientkit-css",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Clientkit task that executes a PostCSS process on your .css files",
   "main": "css.js",
   "scripts": {
