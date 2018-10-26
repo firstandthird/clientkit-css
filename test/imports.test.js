@@ -15,7 +15,7 @@ tap.test('imports in css', (t) => {
   });
 });
 
-tap.only('import err in css', (t) => {
+tap.test('import err in css', (t) => {
   const css = new ClientKitCss('imports', {
     files: {
       'test/out/imports-err.css': 'test/fixtures/import-err.css'
