@@ -206,7 +206,10 @@ class CSSTask extends TaskKitTask {
 
         postcss(processes)
           .process(contents, { from: input, to: outputFilename, map })
-          .then(result => { done(null, result); });
+          .then(result => { done(null, result); })
+          .catch(err => {
+            done(err);
+          });
       },
       messages: (pcss, done) => {
         // istanbul ignore next
